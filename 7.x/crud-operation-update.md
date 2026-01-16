@@ -383,6 +383,19 @@ class Product extends Model
 
 Change the languages available to translate to/from, in your crud config file (```config/backpack/crud.php```). By default there are quite a few enabled (English, French, German, Italian, Romanian).
 
+
+#### Updating and creating translatable entries
+
+When you're creating a translatable entry, the entry will be created in the current user app locale. Either the one set in `config/app.php` or if you allow your admins to change the panel locale, the one set by them will be used. 
+
+When you update a translatable entry you choose in what language you want to create the translation for, idependently of the panel language or app locale. 
+
+When the entry has no translations in the chosen language for translation, you will get the option to select another language to copy the translations from. 
+
+
+![https://backpackforlaravel.com/uploads/docs/translatable-bar.png](https://backpackforlaravel.com/uploads/docs/translatable-bar.png)
+
+
 Additionally, if you have slugs (but only if you need translatable slugs), you'll need to use backpack's classes instead of the ones provided by `cviebrock/eloquent-sluggable`. 
 Make sure you have `cviebrock/eloquent-sluggable` installed as well, if not, please do it with `composer require cviebrock/eloquent-sluggable`:
 
@@ -434,6 +447,8 @@ class Category extends Model
 }
 ```
 > If your slugs are not translatable, use the ```cviebrock/eloquent-sluggable``` traits. The Backpack's ```Sluggable``` trait saves your slug as a JSON object, regardless of the ```slug``` field being defined inside the ```$translatable``` property.
+
+**NOTE**: The `edit` and `show` buttons, show a dropdown with a language selector, so that you can directly edit/show the desired entry in a specific locale. Sometimes you wish to have "plain" buttons without all those dropdowns. In that case, you can turn `showLanguagesDirectlyInEditButton` and/or `showLanguagesDirectlyInShowButton` located in `config/backpack/operations/list.php` and it will disable the language dropdowns from those buttons. As usual you can do it for a specific crud only, by setting `CRUD::setOperationSetting('showLanguagesDirectlyInEditButton', false);` in your controller `setupListOperation` function. 
 
 <a name="delete-button-on-update-operation"></a>
 ### Delete button on Update operation
